@@ -30,8 +30,9 @@ def anglele(a,b,c):
 
     cosine_angle = np.dot(ba, bc) / (np.linalg.norm(ba) * np.linalg.norm(bc))
     angle = np.arccos(cosine_angle)
+    angle =(np.degrees(angle))
 
-    return np.degrees(angle)
+    return angle
 
 
 def visualize_3d(p3ds):
@@ -44,7 +45,7 @@ def visualize_3d(p3ds):
     legl = [[7, 9], [9, 11]]
     body = [torso, arml, armr, legr, legl]
     colors = ['red', 'blue', 'green', 'black', 'orange']
-
+    
 
 
     from mpl_toolkits.mplot3d import Axes3D
@@ -57,6 +58,14 @@ def visualize_3d(p3ds):
         for bodypart, part_color in zip(body, colors):
             for _c in bodypart:
                 ax.plot(xs = [kpts3d[_c[0],0], kpts3d[_c[1],0]], ys = [kpts3d[_c[0],1], kpts3d[_c[1],1]], zs = [kpts3d[_c[0],2], kpts3d[_c[1],2]], linewidth = 4, c = part_color)
+                #print(kpts3d[_c,:])
+        #print(body)
+
+            print("right leg:"+str(anglele(kpts3d[body[4][0][0]],kpts3d[body[4][0][1]],kpts3d[body[4][1][1]])))
+            print("left leg:"+str(anglele(kpts3d[body[3][0][0]],kpts3d[body[3][0][1]],kpts3d[body[3][1][1]])))
+
+            
+            
 
         #uncomment these if you want scatter plot of keypoints and their indices.
         # for i in range(12):
@@ -82,4 +91,6 @@ def visualize_3d(p3ds):
 if __name__ == '__main__':
 
     p3ds = read_keypoints('kpts_3d.dat')
+    
     visualize_3d(p3ds)
+  
